@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reference Sites | Miss Rozo</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky: #e0f4ff;
+    --sun: #FFD93D;
+    --coral: #FF6B6B;
+    --mint: #6BCB77;
+    --lavender: #A29BFE;
+    --peach: #FFB347;
+    --white: #ffffff;
+    --ink: #2d2d2d;
+    --card-shadow: 0 8px 30px rgba(0,0,0,0.10);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background-color: var(--sky);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── BACKGROUND CLOUDS ── */
+  .bg-clouds {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .cloud {
+    position: absolute;
+    background: white;
+    border-radius: 50px;
+    opacity: 0.55;
+    animation: drift linear infinite;
+  }
+  .cloud::before, .cloud::after {
+    content: '';
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+  }
+  .cloud::before { width: 60%; height: 150%; top: -60%; left: 15%; }
+  .cloud::after  { width: 40%; height: 120%; top: -45%; left: 50%; }
+
+  .cloud:nth-child(1) { width: 180px; height: 55px; top: 8%;  left: -200px; animation-duration: 28s; animation-delay: 0s; }
+  .cloud:nth-child(2) { width: 120px; height: 38px; top: 22%; left: -200px; animation-duration: 36s; animation-delay: 5s; opacity: 0.35; }
+  .cloud:nth-child(3) { width: 220px; height: 65px; top: 55%; left: -250px; animation-duration: 45s; animation-delay: 12s; }
+  .cloud:nth-child(4) { width: 100px; height: 32px; top: 75%; left: -200px; animation-duration: 32s; animation-delay: 20s; opacity: 0.40; }
+  .cloud:nth-child(5) { width: 160px; height: 50px; top: 40%; left: -200px; animation-duration: 38s; animation-delay: 8s; }
+
+  @keyframes drift {
+    from { transform: translateX(0); }
+    to   { transform: translateX(calc(100vw + 300px)); }
+  }
+
+  /* ── NAVBAR ── */
+  nav {
+    position: relative;
+    z-index: 10;
+    background: white;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+    box-shadow: 0 3px 18px rgba(0,0,0,0.08);
+    flex-wrap: wrap;
+    gap: .5rem;
+  }
+  .nav-logo {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--coral);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+  }
+  .nav-logo span { color: var(--lavender); }
+  .nav-links {
+    display: flex;
+    gap: 1.4rem;
+    list-style: none;
+    flex-wrap: wrap;
+  }
+  .nav-links a {
+    font-family: 'Baloo 2', cursive;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: none;
+    padding: 4px 10px;
+    border-radius: 20px;
+    transition: background .2s, color .2s;
+  }
+  .nav-links a:hover,
+  .nav-links a.active {
+    background: var(--coral);
+    color: white;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 3.5rem 1rem 1.5rem;
+  }
+  .hero h1 {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1.15;
+  }
+  .hero h1 .accent { color: var(--coral); }
+  .hero p {
+    margin-top: .6rem;
+    font-size: 1rem;
+    color: #666;
+    max-width: 480px;
+    margin-inline: auto;
+  }
+
+  /* ── MAIN ── */
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem 4rem;
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    margin: 2.8rem 0 1.4rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity .5s ease, transform .5s ease;
+  }
+  .section-header.visible { opacity: 1; transform: translateY(0); }
+
+  .section-icon {
+    font-size: 1.7rem;
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .icon-general  { background: #FFF0E5; }
+  .icon-animals  { background: #E5F8E5; }
+  .icon-science  { background: #E5EDFF; }
+  .icon-math     { background: #FFF5D6; }
+
+  .section-header h2 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--ink);
+  }
+  .section-divider {
+    flex: 1;
+    height: 3px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, #ddd 0%, transparent 100%);
+  }
+
+  /* ── CARDS GRID ── */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 1rem;
+  }
+
+  .card {
+    background: white;
+    border-radius: 20px;
+    padding: 1.4rem 1rem 1.2rem;
+    text-align: center;
+    text-decoration: none;
+    color: var(--ink);
+    box-shadow: var(--card-shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .7rem;
+    transition: transform .22s cubic-bezier(.34,1.56,.64,1), box-shadow .22s;
+    opacity: 0;
+    transform: translateY(24px);
+    position: relative;
+    overflow: hidden;
+  }
+  .card.visible { opacity: 1; transform: translateY(0); }
+  .card:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.14);
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    border-radius: 20px 20px 0 0;
+  }
+
+  /* Stripe colors per section */
+  .stripe-coral::before  { background: var(--coral); }
+  .stripe-mint::before   { background: var(--mint); }
+  .stripe-lavender::before { background: var(--lavender); }
+  .stripe-sun::before    { background: var(--sun); }
+
+  .card-logo {
+    width: 72px; height: 72px;
+    border-radius: 16px;
+    object-fit: contain;
+    background: #f7f7f7;
+    padding: 6px;
+  }
+  .card-emoji {
+    font-size: 2.8rem;
+    line-height: 1;
+    width: 72px; height: 72px;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    background: #f7f7f7;
+  }
+  .card-name {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .card-desc {
+    font-size: .78rem;
+    color: #777;
+    line-height: 1.3;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 1.5rem;
+    font-size: .82rem;
+    color: #aaa;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 500px) {
+    .cards { grid-template-columns: repeat(2, 1fr); }
+    nav { height: auto; padding: .8rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Background clouds -->
+<div class="bg-clouds">
+  <div class="cloud"></div>
+  <div class="cloud"></div>
+  <div class="cloud"></div>
+  <div class="cloud"></div>
+  <div class="cloud"></div>
+</div>
+
+<!-- Navbar -->
+<nav>
+  <a class="nav-logo" href="#">Miss <span>Rozo</span></a>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Student Sites</a></li>
+    <li><a href="#" class="active">References</a></li>
+    <li><a href="#">Parent Resources</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <h1>Reference <span class="accent">Sites</span> 📚</h1>
+  <p>Click on any image to visit the website.</p>
+</div>
+
+<!-- Main content -->
+<main>
+
+  <!-- General Reference -->
+  <div class="section-header">
+    <div class="section-icon icon-general">📖</div>
+    <h2>General Reference</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="cards">
+    <a class="card stripe-coral" href="https://www.dictionary.com/" target="_blank" rel="noopener">
+      <div class="card-emoji">📘</div>
+      <div class="card-name">Dictionary.com</div>
+      <div class="card-desc">Look up the meaning of any word</div>
+    </a>
+    <a class="card stripe-coral" href="https://www.thesaurus.com/" target="_blank" rel="noopener">
+      <div class="card-emoji">🔤</div>
+      <div class="card-name">Thesaurus</div>
+      <div class="card-desc">Find synonyms and antonyms</div>
+    </a>
+    <a class="card stripe-coral" href="https://www.kiddle.co/" target="_blank" rel="noopener">
+      <div class="card-emoji">🔍</div>
+      <div class="card-name">Kiddle</div>
+      <div class="card-desc">Safe search engine for kids</div>
+    </a>
+    <a class="card stripe-coral" href="https://kids.britannica.com/" target="_blank" rel="noopener">
+      <div class="card-emoji">🌐</div>
+      <div class="card-name">Britannica Kids</div>
+      <div class="card-desc">Encyclopedia for students</div>
+    </a>
+  </div>
+
+  <!-- Animal Research -->
+  <div class="section-header">
+    <div class="section-icon icon-animals">🐾</div>
+    <h2>Animal Research</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="cards">
+    <a class="card stripe-mint" href="https://animals.sandiegozoo.org/animals" target="_blank" rel="noopener">
+      <div class="card-emoji">🦁</div>
+      <div class="card-name">San Diego Zoo</div>
+      <div class="card-desc">Learn about zoo animals</div>
+    </a>
+    <a class="card stripe-mint" href="https://nationalzoo.si.edu/animals/list" target="_blank" rel="noopener">
+      <div class="card-emoji">🐘</div>
+      <div class="card-name">Smithsonian Zoo</div>
+      <div class="card-desc">Full list of animals</div>
+    </a>
+    <a class="card stripe-mint" href="https://www.worldwildlife.org/species" target="_blank" rel="noopener">
+      <div class="card-emoji">🐼</div>
+      <div class="card-name">World Wildlife Fund</div>
+      <div class="card-desc">Endangered species around the world</div>
+    </a>
+    <a class="card stripe-mint" href="https://animalia.bio/" target="_blank" rel="noopener">
+      <div class="card-emoji">🦋</div>
+      <div class="card-name">Animalia.Bio</div>
+      <div class="card-desc">Animal database & facts</div>
+    </a>
+    <a class="card stripe-mint" href="https://animalfactguide.com/animal-facts/" target="_blank" rel="noopener">
+      <div class="card-emoji">🦊</div>
+      <div class="card-name">Animal Fact Guide</div>
+      <div class="card-desc">Fun facts about animals</div>
+    </a>
+  </div>
+
+  <!-- Science -->
+  <div class="section-header">
+    <div class="section-icon icon-science">🔬</div>
+    <h2>Science</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="cards">
+    <a class="card stripe-lavender" href="https://www.nasa.gov/kids-club" target="_blank" rel="noopener">
+      <div class="card-emoji">🚀</div>
+      <div class="card-name">NASA Kids' Club</div>
+      <div class="card-desc">Space science for kids</div>
+    </a>
+    <a class="card stripe-lavender" href="https://sciencekids.co.nz/" target="_blank" rel="noopener">
+      <div class="card-emoji">🧪</div>
+      <div class="card-name">Science Kids</div>
+      <div class="card-desc">Experiments and science facts</div>
+    </a>
+    <a class="card stripe-lavender" href="https://www.dkfindout.com/" target="_blank" rel="noopener">
+      <div class="card-emoji">🌍</div>
+      <div class="card-name">DK Find Out!</div>
+      <div class="card-desc">Interactive visual encyclopedia</div>
+    </a>
+  </div>
+
+  <!-- Math -->
+  <div class="section-header">
+    <div class="section-icon icon-math">🔢</div>
+    <h2>Math</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="cards">
+    <a class="card stripe-sun" href="https://www.mathplayground.com/" target="_blank" rel="noopener">
+      <div class="card-emoji">🎮</div>
+      <div class="card-name">Math Playground</div>
+      <div class="card-desc">Math games and word problems</div>
+    </a>
+    <a class="card stripe-sun" href="https://www.coolmathgames.com/" target="_blank" rel="noopener">
+      <div class="card-emoji">🧮</div>
+      <div class="card-name">Cool Math Games</div>
+      <div class="card-desc">Learn math while having fun</div>
+    </a>
+    <a class="card stripe-sun" href="https://www.khanacademy.org/math" target="_blank" rel="noopener">
+      <div class="card-emoji">📐</div>
+      <div class="card-name">Khan Academy</div>
+      <div class="card-desc">Free math lessons for everyone</div>
+    </a>
+  </div>
+
+</main>
+
+<footer>
+  © 2025 Miss Rozo · All rights reserved
+</footer>
+
+<script>
+  // Scroll reveal with staggered animation
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.section-header').forEach(el => observer.observe(el));
+
+  document.querySelectorAll('.card').forEach((card, i) => {
+    card.style.transitionDelay = `${(i % 5) * 70}ms`;
+    observer.observe(card);
+  });
+</script>
+</body>
+</html>

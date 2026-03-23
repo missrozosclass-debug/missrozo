@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ABCYa Games | 2nd Grade - Miss Rozo</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky: #e0f4ff;
+    --purple: #7c3aed;
+    --purple-light: #ede9fe;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --yellow: #f59e0b;
+    --yellow-light: #fef9c3;
+    --red: #ef4444;
+    --pink: #ec4899;
+    --blue: #2563eb;
+    --card-radius: 16px;
+    --shadow: 0 4px 20px rgba(0,0,0,0.10);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(160deg, #fdf4ff 0%, #e0f4ff 50%, #f0fdf4 100%);
+    min-height: 100vh;
+    padding-bottom: 60px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(135deg, #7c3aed, #2563eb);
+    color: white;
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: 0 4px 24px rgba(124,58,237,0.25);
+    flex-wrap: wrap;
+  }
+
+  .header-logo {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .header-logo span.abc { color: #fbbf24; }
+  .header-logo span.ya  { color: #86efac; }
+
+  nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  nav a {
+    color: rgba(255,255,255,0.88);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 6px 14px;
+    border-radius: 999px;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  nav a:hover { background: rgba(255,255,255,0.18); color: white; }
+
+  /* ── HERO BANNER ── */
+  .hero {
+    text-align: center;
+    padding: 48px 24px 32px;
+    position: relative;
+  }
+
+  .hero h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: #7c3aed;
+    line-height: 1.1;
+    text-shadow: 3px 3px 0 rgba(124,58,237,0.12);
+  }
+
+  .hero p {
+    margin-top: 10px;
+    color: #6b7280;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  /* decorative stars */
+  .stars {
+    position: absolute;
+    top: 20px; right: 32px;
+    font-size: 2rem;
+    opacity: 0.35;
+    animation: spin 8s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── SECTION ── */
+  .section {
+    max-width: 1100px;
+    margin: 0 auto 48px;
+    padding: 0 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .section-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.55rem;
+    padding: 8px 22px;
+    border-radius: 999px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+  }
+
+  .badge-ela {
+    background: linear-gradient(135deg, #7c3aed, #a855f7);
+    color: white;
+  }
+
+  .badge-math {
+    background: linear-gradient(135deg, #16a34a, #22c55e);
+    color: white;
+  }
+
+  .badge-icon { font-size: 1.4rem; }
+
+  /* ── GAME GRID ── */
+  .game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 20px;
+  }
+
+  .game-card {
+    background: white;
+    border-radius: var(--card-radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    border: 2px solid transparent;
+    position: relative;
+  }
+
+  .game-card:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 10px 32px rgba(0,0,0,0.16);
+  }
+
+  .game-card.ela:hover { border-color: #a855f7; }
+  .game-card.math:hover { border-color: #22c55e; }
+
+  .game-thumb {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+    background: #f3f4f6;
+  }
+
+  /* placeholder thumb when no image */
+  .game-thumb-placeholder {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.8rem;
+  }
+
+  .ela   .game-thumb-placeholder { background: var(--purple-light); }
+  .math  .game-thumb-placeholder { background: var(--green-light); }
+
+  .game-label {
+    padding: 8px 10px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #374151;
+    text-align: center;
+    line-height: 1.3;
+    width: 100%;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 28px 16px;
+    color: #9ca3af;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  footer span { color: #a855f7; }
+
+  /* ── ANIMATIONS ── */
+  .section { animation: fadeUp 0.5s ease both; }
+  .section:nth-child(2) { animation-delay: 0.1s; }
+  .section:nth-child(3) { animation-delay: 0.2s; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .game-card {
+    animation: popIn 0.4s ease both;
+  }
+
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.85); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  /* stagger cards */
+  .game-grid .game-card:nth-child(1)  { animation-delay: 0.05s; }
+  .game-grid .game-card:nth-child(2)  { animation-delay: 0.08s; }
+  .game-grid .game-card:nth-child(3)  { animation-delay: 0.11s; }
+  .game-grid .game-card:nth-child(4)  { animation-delay: 0.14s; }
+  .game-grid .game-card:nth-child(5)  { animation-delay: 0.17s; }
+  .game-grid .game-card:nth-child(6)  { animation-delay: 0.20s; }
+  .game-grid .game-card:nth-child(7)  { animation-delay: 0.23s; }
+  .game-grid .game-card:nth-child(8)  { animation-delay: 0.26s; }
+  .game-grid .game-card:nth-child(9)  { animation-delay: 0.29s; }
+  .game-grid .game-card:nth-child(10) { animation-delay: 0.32s; }
+  .game-grid .game-card:nth-child(n+11) { animation-delay: 0.35s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 500px) {
+    .game-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 14px; }
+    header { padding: 14px 18px; }
+    .header-logo { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-logo">
+    🎮 <span class="abc">ABC</span><span class="ya">Ya</span>&nbsp;Games
+  </div>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Student Sites</a>
+    <a href="#">Resources</a>
+    <a href="#">Parents</a>
+    <a href="#">Contact</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="stars">⭐</div>
+  <h1>Fun Learning Games! 🎉</h1>
+  <p>Click any game to start playing on ABCYa.com</p>
+</div>
+
+<!-- ELA SECTION -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-badge badge-ela">
+      <span class="badge-icon">📚</span> ELA (abc) Games
+    </div>
+  </div>
+
+  <div class="game-grid" id="ela-grid">
+
+    <a class="game-card ela" href="https://www.abcya.com/games/fun-factory-punctuation-capitalization" target="_blank">
+      <div class="game-thumb-placeholder">🏭</div>
+      <div class="game-label">Fun Factory Punctuation</div>
+    </a>
+
+    <a class="game-card ela" href="https://www.abcya.com/games/journey_to_past_tense" target="_blank">
+      <div class="game-thumb-placeholder">⏳</div>
+      <div class="game-label">Journey to Past Tense</div>
+    </a>
+
+    <a class="game-card ela" href="https://www.abcya.com/games/later_gator" target="_blank">
+      <div class="game-thumb-placeholder">🐊</div>
+      <div class="game-label">Later Gator</div>
+    </a>
+
+    <a class="game-card ela" href="https://www.abcya.com/games/nouns_and_verbs" target="_blank">
+      <div class="game-thumb-placeholder">✏️</div>
+      <div class="game-label">Nouns and Verbs</div>
+    </a>
+
+    <a class="game-card ela" href="https://www.abcya.com/games/pancake_panic_homophones" target="_blank">
+      <div class="game-thumb-placeholder">🥞</div>
+      <div class="game-label">Pancake Panic Homophones</div>
+    </a>
+
+    <a class="game-card ela" href="https://www.abcya.com/games/parts-of-speech-quest-nouns" target="_blank">
+      <div class="game-thumb-placeholder">🗺️</div>
+      <div class="game-label">Parts of Speech: Nouns</div>
+    </a>
+
+    <a class="game-card ela" href="https://www.abcya.com/games/parts-of-speech-quest-verbs" target="_blank">
+      <div class="game-thumb-placeholder">🏃</div>
+      <div class="game-label">Parts of Speech: Verbs</div>
+    </a>
+
+    <a class="game-card ela" href="https://www.abcya.com/games/parts-of-speech-quest-adjectives" target="_blank">
+      <div class="game-thumb-placeholder">🌈</div>
+      <div class="game-label">Parts of Speech: Adjectives</div>
+    </a>
+
+    <a class="game-card ela" href="https://www.abcya.com/games/parts-of-speech-quest-adverbs" target="_blank">
+      <div class="game-thumb-placeholder">⚡</div>
+      <div class="game-label">Parts of Speech: Adverbs</div>
+    </a>
+
+    <a class="game-card ela" href="https://www.abcya.com/games/parts-of-speech-quest-pronouns" target="_blank">
+      <div class="game-thumb-placeholder">👤</div>
+      <div class="game-label">Parts of Speech: Pronouns</div>
+    </a>
+
+    <a class="game-card ela" href="https://www.abcya.com/games/parts-of-speech-quest-prepositions" target="_blank">
+      <div class="game-thumb-placeholder">📍</div>
+      <div class="game-label">Parts of Speech: Prepositions</div>
+    </a>
+
+    <a class="game-card ela" href="https://www.abcya.com/games/parts-of-speech-quest-conjunctions" target="_blank">
+      <div class="game-thumb-placeholder">🔗</div>
+      <div class="game-label">Parts of Speech: Conjunctions</div>
+    </a>
+
+    <a class="game-card ela" href="https://www.abcya.com/games/parts-of-speech-quest-interjections" target="_blank">
+      <div class="game-thumb-placeholder">😲</div>
+      <div class="game-label">Parts of Speech: Interjections</div>
+    </a>
+
+    <a class="game-card ela" href="https://www.abcya.com/games/parts-of-speech-quest-final-review" target="_blank">
+      <div class="game-thumb-placeholder">🏆</div>
+      <div class="game-label">Parts of Speech: Final Review</div>
+    </a>
+
+    <a class="game-card ela" href="https://www.abcya.com/games/spelling_spree" target="_blank">
+      <div class="game-thumb-placeholder">🔤</div>
+      <div class="game-label">Spelling Spree</div>
+    </a>
+
+    <a class="game-card ela" href="https://www.abcya.com/games/dolch_sight_word_spelling" target="_blank">
+      <div class="game-thumb-placeholder">👁️</div>
+      <div class="game-label">Dolch Sight Word Spelling</div>
+    </a>
+
+    <a class="game-card ela" href="https://www.abcya.com/games/slimezilla_compound_words" target="_blank">
+      <div class="game-thumb-placeholder">🟢</div>
+      <div class="game-label">Slimezilla Compound Words</div>
+    </a>
+
+    <a class="game-card ela" href="https://www.abcya.com/games/contraction_action" target="_blank">
+      <div class="game-thumb-placeholder">🤝</div>
+      <div class="game-label">Contraction Action</div>
+    </a>
+
+    <a class="game-card ela" href="https://www.abcya.com/games/wordtoss_synonym_antonym" target="_blank">
+      <div class="game-thumb-placeholder">🔄</div>
+      <div class="game-label">Wordtoss: Synonym & Antonym</div>
+    </a>
+
+    <a class="game-card ela" href="https://www.abcya.com/games/parts_of_speech" target="_blank">
+      <div class="game-thumb-placeholder">📝</div>
+      <div class="game-label">Parts of Speech</div>
+    </a>
+
+    <a class="game-card ela" href="https://www.abcya.com/games/spelling_practice" target="_blank">
+      <div class="game-thumb-placeholder">✍️</div>
+      <div class="game-label">Spelling Practice</div>
+    </a>
+
+  </div>
+</section>
+
+<!-- MATH SECTION -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-badge badge-math">
+      <span class="badge-icon">🔢</span> Math (123) Games
+    </div>
+  </div>
+
+  <div class="game-grid" id="math-grid">
+
+    <a class="game-card math" href="https://www.abcya.com/games/base-ten-bingo" target="_blank">
+      <div class="game-thumb-placeholder">🎱</div>
+      <div class="game-label">Base Ten Bingo</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/base_ten_fun" target="_blank">
+      <div class="game-thumb-placeholder">🧱</div>
+      <div class="game-label">Base Ten Fun</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/comparing_number_values" target="_blank">
+      <div class="game-thumb-placeholder">⚖️</div>
+      <div class="game-label">Comparing Number Values</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/clear_it_addition" target="_blank">
+      <div class="game-thumb-placeholder">➕</div>
+      <div class="game-label">Clear It Addition</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/drop_sum" target="_blank">
+      <div class="game-thumb-placeholder">🎯</div>
+      <div class="game-label">Drop Sum</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/ducky_race_subtraction" target="_blank">
+      <div class="game-thumb-placeholder">🦆</div>
+      <div class="game-label">Ducky Race Subtraction</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/gobble_squabble" target="_blank">
+      <div class="game-thumb-placeholder">🦃</div>
+      <div class="game-label">Gobble Squabble</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/money_counting" target="_blank">
+      <div class="game-thumb-placeholder">💰</div>
+      <div class="game-label">Money Counting</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/break_the_bank_sorting" target="_blank">
+      <div class="game-thumb-placeholder">🏦</div>
+      <div class="game-label">Break the Bank Sorting</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/fuzz_bugs_graphing" target="_blank">
+      <div class="game-thumb-placeholder">🐛</div>
+      <div class="game-label">Fuzz Bugs Graphing</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/math_facts_game" target="_blank">
+      <div class="game-thumb-placeholder">🧠</div>
+      <div class="game-label">Math Facts Game</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/math_lines_addition" target="_blank">
+      <div class="game-thumb-placeholder">➕</div>
+      <div class="game-label">Math Lines Addition</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/math_lines_multiplication" target="_blank">
+      <div class="game-thumb-placeholder">✖️</div>
+      <div class="game-label">Math Lines Multiplication</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/math-bingo" target="_blank">
+      <div class="game-thumb-placeholder">🎰</div>
+      <div class="game-label">Math Bingo</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/addition" target="_blank">
+      <div class="game-thumb-placeholder">🔢</div>
+      <div class="game-label">Addition</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/marble_drop_addition" target="_blank">
+      <div class="game-thumb-placeholder">🔵</div>
+      <div class="game-label">Marble Drop Addition</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/telling_time" target="_blank">
+      <div class="game-thumb-placeholder">⏰</div>
+      <div class="game-label">Telling Time</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/math_man_jr" target="_blank">
+      <div class="game-thumb-placeholder">👾</div>
+      <div class="game-label">Math Man Jr.</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/jet_ski_addition" target="_blank">
+      <div class="game-thumb-placeholder">🚤</div>
+      <div class="game-label">Jet Ski Addition</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/how_many_marbles_estimation" target="_blank">
+      <div class="game-thumb-placeholder">🔮</div>
+      <div class="game-label">How Many Marbles? Estimation</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/multiplication_mine_jr" target="_blank">
+      <div class="game-thumb-placeholder">💣</div>
+      <div class="game-label">Multiplication Mine Jr.</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/math-magician-color-quest" target="_blank">
+      <div class="game-thumb-placeholder">🧙</div>
+      <div class="game-label">Math Magician Color Quest</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/math_stack" target="_blank">
+      <div class="game-thumb-placeholder">📦</div>
+      <div class="game-label">Math Stack</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/math_quiz" target="_blank">
+      <div class="game-thumb-placeholder">❓</div>
+      <div class="game-label">Math Quiz</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/money-bingo" target="_blank">
+      <div class="game-thumb-placeholder">💵</div>
+      <div class="game-label">Money Bingo</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/math_match" target="_blank">
+      <div class="game-thumb-placeholder">🃏</div>
+      <div class="game-label">Math Match</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/number_ninja_multiples" target="_blank">
+      <div class="game-thumb-placeholder">🥷</div>
+      <div class="game-label">Number Ninja Multiples</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/number_ninja_odd_even" target="_blank">
+      <div class="game-thumb-placeholder">🥷</div>
+      <div class="game-label">Number Ninja Odd/Even</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/first_grade_word_problems_add_subtract" target="_blank">
+      <div class="game-thumb-placeholder">📖</div>
+      <div class="game-label">Word Problems Add &amp; Subtract</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/number_patterns" target="_blank">
+      <div class="game-thumb-placeholder">🔁</div>
+      <div class="game-label">Number Patterns</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/100_number_grid" target="_blank">
+      <div class="game-thumb-placeholder">100</div>
+      <div class="game-label">100 Number Grid</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/roll_to_the_finish" target="_blank">
+      <div class="game-thumb-placeholder">🎲</div>
+      <div class="game-label">Roll to the Finish</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/sum_of_all_dice" target="_blank">
+      <div class="game-thumb-placeholder">🎲</div>
+      <div class="game-label">Sum of All Dice</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/estimating" target="_blank">
+      <div class="game-thumb-placeholder">🤔</div>
+      <div class="game-label">Estimating</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/rounding_numbers" target="_blank">
+      <div class="game-thumb-placeholder">🔄</div>
+      <div class="game-label">Rounding Numbers</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/place_value_hockey" target="_blank">
+      <div class="game-thumb-placeholder">🏒</div>
+      <div class="game-label">Place Value Hockey</div>
+    </a>
+
+    <a class="game-card math" href="https://www.abcya.com/games/number_race" target="_blank">
+      <div class="game-thumb-placeholder">🏁</div>
+      <div class="game-label">Number Race</div>
+    </a>
+
+  </div>
+</section>
+
+<footer>
+  Welcome to <span>Miss Rozo's</span> classroom web portal! 🌟
+</footer>
+
+</body>
+</html>

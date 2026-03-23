@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Miss Rozo – Student Sites</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sky: #d0f0ff;
+      --yellow: #ffe066;
+      --coral: #ff6f61;
+      --green: #6ddb8b;
+      --purple: #b388ff;
+      --blue: #4fc3f7;
+      --pink: #f48fb1;
+      --orange: #ffb347;
+      --white: #ffffff;
+      --text: #2d2d5f;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--sky);
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--text);
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 160px 80px at 10% 15%, #fff 80%, transparent 100%),
+        radial-gradient(ellipse 100px 55px at 13% 18%, #fff 80%, transparent 100%),
+        radial-gradient(ellipse 200px 90px at 75% 8%,  #fff 80%, transparent 100%),
+        radial-gradient(ellipse 130px 60px at 78% 12%, #fff 80%, transparent 100%),
+        radial-gradient(ellipse 90px  45px at 45% 25%, #fff 80%, transparent 100%),
+        linear-gradient(180deg, #a8dcf5 0%, #d0f0ff 55%, #e8f9e0 100%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .rainbow-bar {
+      height: 8px;
+      background: linear-gradient(90deg,
+        #ff6f61, #ffb347, #ffe066, #6ddb8b,
+        #4fc3f7, #b388ff, #f48fb1, #ff6f61);
+      position: relative;
+      z-index: 10;
+    }
+
+    header {
+      position: relative;
+      z-index: 5;
+      text-align: center;
+      padding: 40px 20px 20px;
+    }
+
+    .header-bubble {
+      display: inline-block;
+      background: var(--white);
+      border-radius: 2rem;
+      padding: 18px 48px;
+      box-shadow: 0 8px 32px rgba(79,195,247,.25), 0 2px 0 #b3e5fc;
+      border: 3px solid #b3e5fc;
+    }
+
+    header h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      color: var(--coral);
+      letter-spacing: .5px;
+      line-height: 1.1;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #6a6aaa;
+      margin-top: 6px;
+    }
+
+    nav {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 16px 20px;
+    }
+
+    nav a {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      color: var(--white);
+      text-decoration: none;
+      padding: 8px 20px;
+      border-radius: 50px;
+      background: var(--coral);
+      box-shadow: 0 4px 0 #c0392b;
+      transition: transform .15s, box-shadow .15s;
+    }
+    nav a:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #c0392b; }
+    nav a:nth-child(2) { background: var(--purple); box-shadow: 0 4px 0 #7e57c2; }
+    nav a:nth-child(2):hover { box-shadow: 0 6px 0 #7e57c2; }
+    nav a:nth-child(3) { background: var(--green); box-shadow: 0 4px 0 #43a262; color: #2d5a3d; }
+    nav a:nth-child(3):hover { box-shadow: 0 6px 0 #43a262; }
+    nav a:nth-child(4) { background: var(--orange); box-shadow: 0 4px 0 #e0922b; color: #5a3a00; }
+    nav a:nth-child(4):hover { box-shadow: 0 6px 0 #e0922b; }
+
+    .section-title {
+      position: relative;
+      z-index: 5;
+      text-align: center;
+      margin: 10px 0 28px;
+    }
+
+    .section-title h2 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      color: var(--text);
+      background: var(--yellow);
+      display: inline-block;
+      padding: 8px 32px;
+      border-radius: 50px;
+      box-shadow: 0 4px 0 #d4a800;
+    }
+
+    .grid {
+      position: relative;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 24px;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px 60px;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 20px 14px 16px;
+      text-align: center;
+      text-decoration: none;
+      color: var(--text);
+      border: 3px solid transparent;
+      transition: transform .18s cubic-bezier(.34,1.56,.64,1), box-shadow .18s;
+      animation: popIn .5s cubic-bezier(.34,1.56,.64,1) both;
+    }
+
+    .card:hover { transform: translateY(-6px) scale(1.04); }
+
+    .card:nth-child(1)  { animation-delay:.05s; border-color:var(--coral);  box-shadow:0 6px 0 #e8b4b0; }
+    .card:nth-child(2)  { animation-delay:.10s; border-color:var(--blue);   box-shadow:0 6px 0 #9dd9f0; }
+    .card:nth-child(3)  { animation-delay:.15s; border-color:var(--green);  box-shadow:0 6px 0 #a5ddb5; }
+    .card:nth-child(4)  { animation-delay:.20s; border-color:var(--yellow); box-shadow:0 6px 0 #d4a800; }
+    .card:nth-child(5)  { animation-delay:.25s; border-color:var(--purple); box-shadow:0 6px 0 #c9aaff; }
+    .card:nth-child(6)  { animation-delay:.30s; border-color:var(--pink);   box-shadow:0 6px 0 #f0b8cc; }
+    .card:nth-child(7)  { animation-delay:.35s; border-color:var(--orange); box-shadow:0 6px 0 #d4922b; }
+    .card:nth-child(8)  { animation-delay:.40s; border-color:var(--coral);  box-shadow:0 6px 0 #e8b4b0; }
+    .card:nth-child(9)  { animation-delay:.45s; border-color:var(--blue);   box-shadow:0 6px 0 #9dd9f0; }
+    .card:nth-child(10) { animation-delay:.50s; border-color:var(--green);  box-shadow:0 6px 0 #a5ddb5; }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(.7) translateY(20px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .logo-wrap {
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 10px;
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f0f4ff;
+    }
+
+    .logo-wrap img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .logo-wrap .fallback {
+      font-size: 3rem;
+      display: none;
+      line-height: 1;
+    }
+
+    .card-name {
+      font-weight: 800;
+      font-size: .95rem;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    footer {
+      position: relative;
+      z-index: 5;
+      text-align: center;
+      padding: 20px;
+      font-size: .85rem;
+      color: #7a7aaa;
+      font-weight: 700;
+    }
+
+    .stars { position: fixed; z-index: 1; pointer-events: none; inset: 0; }
+    .star { position: absolute; font-size: 1.4rem; animation: twinkle 3s ease-in-out infinite; opacity: .5; }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: .3; transform: scale(1); }
+      50%       { opacity: .8; transform: scale(1.2); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="stars" aria-hidden="true">
+    <span class="star" style="top:6%;  left:4%;  animation-delay:0s">⭐</span>
+    <span class="star" style="top:12%; left:88%; animation-delay:.8s">🌟</span>
+    <span class="star" style="top:30%; left:2%;  animation-delay:1.4s">✨</span>
+    <span class="star" style="top:55%; left:95%; animation-delay:.3s">⭐</span>
+    <span class="star" style="top:75%; left:6%;  animation-delay:1.9s">🌟</span>
+    <span class="star" style="top:85%; left:91%; animation-delay:.6s">✨</span>
+  </div>
+
+  <div class="rainbow-bar"></div>
+
+  <header>
+    <div class="header-bubble">
+      <h1>🍎 Miss Rozo's Classroom</h1>
+      <p>¡Haz clic en tu sitio favorito para aprender!</p>
+    </div>
+  </header>
+
+  <nav>
+    <a href="#">🏠 Home</a>
+    <a href="#">🖥️ Student Sites</a>
+    <a href="#">📚 Resources</a>
+    <a href="#">📬 Contact</a>
+  </nav>
+
+  <div class="section-title">
+    <h2>🎉 Student Sites</h2>
+  </div>
+
+  <main class="grid">
+
+    <!-- ClassLink -->
+    <a class="card" href="https://launchpad.classlink.com" target="_blank" rel="noopener">
+      <div class="logo-wrap" style="background:#e8f0fe">
+        <img src="https://www.classlink.com/hubfs/raw_assets/public/classlink-theme-2022/images/favicon.png" alt="ClassLink"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <span class="fallback">🚀</span>
+      </div>
+      <span class="card-name">ClassLink Launchpad</span>
+    </a>
+
+    <!-- Boom Learning -->
+    <a class="card" href="https://wow.boomlearning.com/signin/student" target="_blank" rel="noopener">
+      <div class="logo-wrap" style="background:#fff3e0">
+        <img src="https://cdn.boomlearning.com/assets/v3/images/boom-logo-icon.png" alt="Boom Learning"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <span class="fallback">💥</span>
+      </div>
+      <span class="card-name">Boom Learning</span>
+    </a>
+
+    <!-- Prodigy -->
+    <a class="card" href="https://sso.prodigygame.com" target="_blank" rel="noopener">
+      <div class="logo-wrap" style="background:#e8f5e9">
+        <img src="https://cdn.prodigygame.com/game/assets/v1-0-0/i/assets/icon-152.png" alt="Prodigy"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <span class="fallback">🧙</span>
+      </div>
+      <span class="card-name">Prodigy Math</span>
+    </a>
+
+    <!-- 99Math -->
+    <a class="card" href="https://99math.com/login" target="_blank" rel="noopener">
+      <div class="logo-wrap" style="background:#fff8e1">
+        <img src="https://99math.com/apple-touch-icon.png" alt="99Math"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <span class="fallback">🔢</span>
+      </div>
+      <span class="card-name">99Math</span>
+    </a>
+
+    <!-- Epic -->
+    <a class="card" href="https://kids.getepic.com/students" target="_blank" rel="noopener">
+      <div class="logo-wrap" style="background:#e3f2fd">
+        <img src="https://a.storyblok.com/f/141700/512x512/f46b36f3e3/epic-app-icon.png" alt="Epic Books"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <span class="fallback">📖</span>
+      </div>
+      <span class="card-name">Epic! Books</span>
+    </a>
+
+    <!-- Storyline Online -->
+    <a class="card" href="https://storylineonline.net/" target="_blank" rel="noopener">
+      <div class="logo-wrap" style="background:#fce4ec">
+        <img src="https://storylineonline.net/wp-content/uploads/2020/10/cropped-SOL_FavIcon_32-192x192.png" alt="Storyline Online"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <span class="fallback">🎙️</span>
+      </div>
+      <span class="card-name">Storyline Online</span>
+    </a>
+
+    <!-- Kids A-Z -->
+    <a class="card" href="https://www.kidsa-z.com/ng/" target="_blank" rel="noopener">
+      <div class="logo-wrap" style="background:#ede7f6">
+        <img src="https://www.kidsa-z.com/apple-touch-icon.png" alt="Kids A-Z"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <span class="fallback">🔤</span>
+      </div>
+      <span class="card-name">Kids A-Z</span>
+    </a>
+
+    <!-- ReadWorks -->
+    <a class="card" href="https://www.readworks.org/" target="_blank" rel="noopener">
+      <div class="logo-wrap" style="background:#e0f2f1">
+        <img src="https://www.readworks.org/apple-touch-icon.png" alt="ReadWorks"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <span class="fallback">📝</span>
+      </div>
+      <span class="card-name">ReadWorks</span>
+    </a>
+
+    <!-- Kahoot -->
+    <a class="card" href="https://kahoot.it/" target="_blank" rel="noopener">
+      <div class="logo-wrap" style="background:#f3e5f5">
+        <img src="https://kahoot.com/wp-content/uploads/2023/07/cropped-kahoot-favicon-192x192.png" alt="Kahoot"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <span class="fallback">🎮</span>
+      </div>
+      <span class="card-name">Kahoot!</span>
+    </a>
+
+    <!-- Wayground -->
+    <a class="card" href="https://wayground.com/login" target="_blank" rel="noopener">
+      <div class="logo-wrap" style="background:#e8f5e9">
+        <img src="https://wayground.com/apple-touch-icon.png" alt="Wayground"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <span class="fallback">🌍</span>
+      </div>
+      <span class="card-name">Wayground</span>
+    </a>
+
+  </main>
+
+  <footer>
+    Made with ❤️ for Miss Rozo's students &nbsp;·&nbsp; 2026
+  </footer>
+
+  <script>
+    // If image loads but is 0px (blocked), show emoji fallback
+    document.querySelectorAll('.logo-wrap img').forEach(img => {
+      img.addEventListener('load', () => {
+        if (img.naturalWidth === 0) {
+          img.style.display = 'none';
+          img.nextElementSibling.style.display = 'block';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
