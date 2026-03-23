@@ -153,7 +153,16 @@
       transition: transform .18s cubic-bezier(.34,1.56,.64,1), box-shadow .18s;
       animation: popIn .5s cubic-bezier(.34,1.56,.64,1) both;
     }
+<style>
+.card{
+  transition: all 0.3s ease;
+}
 
+.card:hover{
+  transform: translateY(-10px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+</style>
     .card:hover { transform: translateY(-6px) scale(1.04); }
 
     .card:nth-child(1)  { animation-delay:.05s; border-color:var(--coral);  box-shadow:0 6px 0 #e8b4b0; }
